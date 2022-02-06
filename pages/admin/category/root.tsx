@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import { AdminLayout } from '../../../components/layout/AdminLayout';
 import { Spinner } from '../../../components/spinner/Spinner';
 import { CATEGORIES_END_POINT, ROOT_CATEGORIES_END_POINT } from '../../../src/api';
@@ -12,6 +13,8 @@ import { AdminAddCategory } from '../../../src/page-components/admin/category-pa
 import { AdminAddRootCategory } from '../../../src/page-components/admin/category-page/root-categories/AddRootCategory';
 import { AdminAddSubCategories } from '../../../src/page-components/admin/category-page/sub-categories/AddSubCategories';
 import { ICategory, ICategoryResponse, IRootCategory, ISubCategory } from '../../../src/response-types/categories-response.types';
+import { RootState } from '../../../store';
+import { editRootCategory } from '../../../store/slices/categoriesSlice';
 import { withAuth } from '../../../withAuth';
 
 interface IProps {
@@ -19,20 +22,16 @@ interface IProps {
 }
 
 const AdminAddRootCategoryPage = ({ token }: IProps) => {
-    const { data: rootCategories, error: rootCategoriesError, isLoading: isRootCategoriesLoading } = useQuery<any, AxiosError, AxiosResponse<IRootCategory[]>>(ROOT_CATEGORIES_END_POINT.GET_ALL_ROOT_CATEGORIES, getAllRootCategoriesFromTheServer)
-
-    const { data: categories, error: categoriesError, isLoading: isCategoriesLoading } = useQuery<any, AxiosError, AxiosResponse<ICategory[]>>(CATEGORIES_END_POINT.GET_ALL_CATEGORIES, getAllCategoriesFromTheServer)
-
-    if (isCategoriesLoading || isRootCategoriesLoading) {
-        return <Spinner />
-    }
+    const rootCategories = useSelector((state: RootState) => state.categories.rootCategories);
+    const categories = useSelector((state: RootState) => state.categories.categories);
+    const dispatch = useDispatch();
 
     const handleAddRootCategory = async (value: string) => {
         const response = await addRootCategoryToServer(value, token);
         if (!response.ok) {
             return toast.error(response.originalError.response?.data.message);
         }
-        const data = response.data as ICategoryResponse<IRootCategory>
+        const data = response.data as ICategoryResponse<IRootCategory>;
         toast.success(data.message)
     }
 
@@ -61,9 +60,9 @@ const AdminAddRootCategoryPage = ({ token }: IProps) => {
         {/* Root Category */}
         <AdminAddRootCategory handleAddRootCategory={handleAddRootCategory} />
         {/* Category */}
-        <AdminAddCategory handleAddCategory={handleAddCategory} rootCategories={rootCategories?.data} />
+        <AdminAddCategory handleAddCategory={handleAddCategory} rootCategories={rootCategories} />
         {/* Sub Category */}
-        <AdminAddSubCategories categories={categories?.data} rootCategories={rootCategories?.data} handleAddSubCategory={handleAddSubCategory} />
+        <AdminAddSubCategories categories={categories} rootCategories={rootCategories} handleAddSubCategory={handleAddSubCategory} />
 
     </AdminLayout>;
 };

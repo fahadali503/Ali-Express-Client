@@ -11,6 +11,7 @@ export const AXIOS_BASE_URL = axios.create({
 export enum ROOT_CATEGORIES_END_POINT {
     GET_ALL_ROOT_CATEGORIES = "/category/root",
     CREATE_NEW_ROOT_CATEGORY = "/category/root/new",
+    UPDATE_ROOT_CATEGORY = "/category/root",
 }
 
 export enum CATEGORIES_END_POINT {

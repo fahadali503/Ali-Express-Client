@@ -1,3 +1,4 @@
 export enum SLICE_CONSTANTS {
-    USER = "USER"
+    USER = "USER",
+    CATEGORY = "CATEGORY"
 }

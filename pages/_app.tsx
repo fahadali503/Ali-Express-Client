@@ -6,10 +6,12 @@ import { Toaster } from 'react-hot-toast';
 import { store } from '../store'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { AppLayout } from '../components/layout/AppLayout';
 
 
 const queryClient = new QueryClient()
 function MyApp({ Component, pageProps }: AppProps) {
+
 
   return <>
     <Head>
@@ -24,7 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
-        <Component {...pageProps} />
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
       </QueryClientProvider>
     </Provider>
   </>
