@@ -13,4 +13,5 @@ export enum ADMIN_LINKS {
     CATEGORY = "/admin/category",
     SETTINGS = "/admin/setting",
     REPORTS = "/admin/reports",
+    ADD_ROOT_CATEGORY = "/admin/category/root"
 }

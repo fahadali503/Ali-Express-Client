@@ -39,13 +39,13 @@ export const AdminLayout: React.FC<IProps> = ({ children, title, token }) => {
             <title>{title}</title>
         </Head>
         <div>
-            <div className='grid grid-cols-4'>
+            <div className='grid grid-cols-4 gap-3'>
                 <div><AdminSidebar /></div>
                 <div className='col-span-3'>
-                    <div>
+                    <div className='h-28'>
                         {/* Header */}
                     </div>
-                    <div>
+                    <div className='block'>
                         {children}
                     </div>
                 </div>
