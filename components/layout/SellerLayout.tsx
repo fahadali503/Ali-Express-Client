@@ -2,11 +2,12 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ROLES } from '../../src/api/auth/register.api';
 import { getUserFromLocalStorage } from '../../src/utils/jwt';
-import { ADMIN_LINKS } from '../../src/utils/Links';
+import { SELLER_LINKS } from '../../src/utils/Links';
 import { RootState } from '../../store';
 import { addUser, logoutUser } from '../../store/slices/userSlice';
-import { AdminSidebar } from '../admin/Sidebar';
+import { SellerSidebar } from '../seller/Navbar';
 import { Spinner } from '../spinner/Spinner';
 
 interface IProps {
@@ -15,11 +16,13 @@ interface IProps {
 }
 
 const jwt = getUserFromLocalStorage();
-export const AdminLayout: React.FC<IProps> = ({ children, title, token }) => {
+export const SellerLayout: React.FC<IProps> = ({ children, title, token }) => {
     const [loading, setLoading] = useState(false);
     const user = useSelector((state: RootState) => state.user.user);
     const dispatch = useDispatch();
     const router = useRouter()
+
+
 
     useEffect(() => {
         setLoading(true)
@@ -27,11 +30,11 @@ export const AdminLayout: React.FC<IProps> = ({ children, title, token }) => {
             if (jwt?.token) {
                 dispatch(addUser(jwt))
             }
-            if (user?.role !== 'admin') {
-                router.push({ pathname: ADMIN_LINKS.LOGIN, query: { redirect: router.asPath } })
+            else if (user?.role !== ROLES.SELLER) {
+                router.push({ pathname: SELLER_LINKS.LOGIN, query: { redirect: router.asPath } })
             }
         } else {
-            router.push({ pathname: ADMIN_LINKS.LOGIN, query: { redirect: router.asPath } })
+            router.push({ pathname: SELLER_LINKS.LOGIN, query: { redirect: router.asPath } })
             dispatch(logoutUser())
         }
         setLoading(false);
@@ -45,7 +48,6 @@ export const AdminLayout: React.FC<IProps> = ({ children, title, token }) => {
     if (!user) {
         return null;
     }
-
     else {
         return <div>
             <Head>
@@ -53,14 +55,11 @@ export const AdminLayout: React.FC<IProps> = ({ children, title, token }) => {
             </Head>
             <div>
                 <div className='grid grid-cols-4 gap-3'>
-                    <div><AdminSidebar /></div>
+                    <div>
+                        <SellerSidebar />
+                    </div>
                     <div className='col-span-3'>
-                        <div className='h-28'>
-                            {/* Header */}
-                        </div>
-                        <div className='block'>
-                            {children}
-                        </div>
+                        {children}
                     </div>
                 </div>
             </div>

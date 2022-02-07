@@ -5,18 +5,20 @@ import toast from 'react-hot-toast';
 import { MdLogout } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { removeUserfromLocalStorage } from '../src/utils/jwt';
-import { ADMIN_LINKS } from '../src/utils/Links';
 import { logoutUser } from '../store/slices/userSlice';
 
+interface IProps {
+  logoutLink: string
+}
 
-export const Logout = () => {
+export const Logout = ({ logoutLink }: IProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleLogout = async () => {
     axios.get('/api/logout').then(res => {
       toast.success(res.data.message);
-      router.push(ADMIN_LINKS.LOGIN);
+      router.push(logoutLink);
       removeUserfromLocalStorage();
       dispatch(logoutUser())
     }).catch(err => {

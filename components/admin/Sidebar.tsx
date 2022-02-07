@@ -21,7 +21,7 @@ export const AdminSidebar = () => {
                 <AdminNavLink Icon={MdSettings} href={ADMIN_LINKS.SETTINGS} text='Settings' />
             </div>
             <div className='mt-16'>
-                <Logout />
+                <Logout logoutLink={ADMIN_LINKS.LOGIN} />
             </div>
         </div>
     </div>;

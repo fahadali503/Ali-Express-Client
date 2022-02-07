@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { parseCookies } from "nookies";
 import { COOKIE_NAME } from "./pages/api/login";
 
@@ -12,6 +12,7 @@ export const withAuth = (gssp: (context: Context) => { props: {} }) => {
         const token = cookies[COOKIE_NAME];
         if (token) {
             return gssp({ ...context, token })
+
         }
         return await gssp({ ...context, token: null })
     }

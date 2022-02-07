@@ -4,6 +4,11 @@ import { MainLayout } from '../../components/layout';
 import * as Yup from 'yup';
 import { Input } from '../../components/inputs/Input';
 import { DangerButton } from '../../components/buttons/DangerButton';
+import { createAccountOnServer, ROLES } from '../../src/api/auth/register.api';
+import { handleApiError } from '../../src/api/error.api';
+import toast from 'react-hot-toast';
+import Link from 'next/link';
+import { SELLER_LINKS } from '../../src/utils/Links';
 
 const initialState = {
     email: "",
@@ -16,9 +21,19 @@ const SellerRegisterSchema = Yup.object().shape({
 })
 
 const SellerRegisterPage = () => {
+
+    const onSubmitHandler = async (values: { email: string, password: string }) => {
+        const response = await createAccountOnServer({ ...values, role: ROLES.SELLER });
+        handleApiError(response);
+        const data = response.data as { message: string };
+        if (response.ok) {
+            toast.success(data.message);
+        }
+    }
+
     return <MainLayout title='Create Seller Account to start selling globally!'>
         <h1 className='text-center mt-10 text-6xl'>Create Account</h1>
-        <Formik validationSchema={SellerRegisterSchema} onSubmit={values => console.log(values)} initialValues={initialState}>
+        <Formik validationSchema={SellerRegisterSchema} onSubmit={values => onSubmitHandler(values)} initialValues={initialState}>
             {({ errors, touched, handleSubmit, handleChange, handleBlur, values, }) => (
                 <form className='w-1/2 border py-10 mt-16 mx-auto px-10'>
                     <div className='mt-2'>
@@ -33,6 +48,11 @@ const SellerRegisterPage = () => {
                     </div>
                     <div>
                         <DangerButton onClick={handleSubmit} type='submit' text='Sign Up' className='w-full text-base font-semibold' disabled={!values.email && !values.password} />
+                    </div>
+                    <div className='text-center font-semibold mt-5 text-blue-500  px-9'>
+                        <Link href={SELLER_LINKS.LOGIN}>
+                            <a>Login & start selling!</a>
+                        </Link>
                     </div>
                 </form>
             )}

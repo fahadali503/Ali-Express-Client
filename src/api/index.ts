@@ -23,3 +23,8 @@ export enum SUB_CATEGORIES_END_POINT {
     CREATE_NEW_SUB_CATEGORY = "/category/subcategory/new",
     GET_ALL_SUB_CATEGORIES = "/category/subcategory",
 }
+
+export enum AUTH_END_POINTS {
+    REGISTER = "/user/new",
+    LOGIN = "/auth/login"
+}

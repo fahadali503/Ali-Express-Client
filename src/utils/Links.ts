@@ -15,3 +15,12 @@ export enum ADMIN_LINKS {
     REPORTS = "/admin/reports",
     ADD_ROOT_CATEGORY = "/admin/category/root"
 }
+
+export enum SELLER_LINKS {
+    LOGIN = "/seller/login",
+    REGISTER = "/seller/register",
+    DASHBOARD = "/seller/dashboard",
+    PRODUCTS = "/seller/products",
+    SUPPORT = "/seller/support",
+    ORDERS = "/seller/orders",
+}
