@@ -21,6 +21,7 @@ export enum SELLER_LINKS {
     REGISTER = "/seller/register",
     DASHBOARD = "/seller/dashboard",
     PRODUCTS = "/seller/products",
+    ADD_PRODUCT = "/seller/products/add",
     SUPPORT = "/seller/support",
     ORDERS = "/seller/orders",
 }

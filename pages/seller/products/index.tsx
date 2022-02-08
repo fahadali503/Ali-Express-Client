@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 import { SellerLayout } from '../../../components/layout/SellerLayout';
+import { SellerAddProduct } from '../../../src/page-components/seller/products/SellerFAB';
 import { withAuth } from '../../../withAuth';
 
 interface IProps {
@@ -8,7 +9,8 @@ interface IProps {
 }
 const SellerProductsPage = ({ token }: IProps) => {
     return <SellerLayout token={token} title='Dashboard - Seller'>
-        Seller Products Page
+        {/* Add Product FAB */}
+        <SellerAddProduct />
     </SellerLayout>;
 };
 
