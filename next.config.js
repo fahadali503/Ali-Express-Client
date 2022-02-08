@@ -2,5 +2,5 @@
 const nextConfig = {
   reactStrictMode: true,
 }
-
-module.exports = nextConfig
+const withTM = require('next-transpile-modules')(['suneditor'])
+module.exports = withTM(nextConfig)

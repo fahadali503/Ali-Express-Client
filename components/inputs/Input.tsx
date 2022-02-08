@@ -5,7 +5,7 @@ interface IProps {
     label?: string;
     name: string;
     handleChange: (e: React.ChangeEvent<any>) => void;
-    handleBlur: (e: React.ChangeEvent<any>) => void;
+    handleBlur?: (e: React.ChangeEvent<any>) => void;
     type: React.HTMLInputTypeAttribute;
     placeholder: string;
     className?: string;

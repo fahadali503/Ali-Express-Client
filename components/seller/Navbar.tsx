@@ -6,7 +6,7 @@ import { SELLER_LINKS } from '../../src/utils/Links';
 import { Logout } from '../Logout';
 
 export const SellerSidebar = () => {
-    return <div className='h-screen fixed w-72 border'>
+    return <div className='h-screen bg-white fixed w-72 border'>
         <div>
             <Logo />
         </div>
